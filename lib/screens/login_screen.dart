@@ -102,42 +102,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   Expanded(child: Container()),
-                  // RaisedButton.icon(
-                  //   shape: RoundedRectangleBorder(
-                  //     borderRadius: BorderRadius.circular(10),
-                  //   ),
-                  //   padding: const EdgeInsets.only(
-                  //     right: 70,
-                  //     left: 20,
-                  //     top: 7,
-                  //     bottom: 7,
-                  //   ),
-                  //   textColor: Color(0xFF033249),
-                  //   color: Colors.white,
-                  //   onPressed: () {},
-                  //   icon: Icon(
-                  //     Icons.phone,
-                  //     color: Color(0xFF033249),
-                  //   ),
-                  //   label: Text(
-                  //     'Sign in using phone',
-                  //     style: TextStyle(fontWeight: FontWeight.w600),
-                  //   ),
-                  //   highlightElevation: 15,
-                  // ),
-                  // SizedBox(height: 20),
-                  // Shimmer.fromColors(
-                  //   baseColor: Color(0xFFFF8038),
-                  //   highlightColor: Colors.amber.shade300,
-                  //   child: Text(
-                  //     'Or',
-                  //     style: TextStyle(
-                  //         color: Color(0xFFFF8038),
-                  //         fontWeight: FontWeight.w600,
-                  //         fontSize: 17),
-                  //   ),
-                  // ),
-                  // SizedBox(height: 20),
                   SignInButton(
                     Buttons.Google,
                     onPressed: onTapSignInWithGoogle,
