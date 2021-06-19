@@ -1,0 +1,84 @@
+{
+  "project_info": {
+    "project_number": "234872477923",
+    "project_id": "event-planner-udaipur",
+    "storage_bucket": "event-planner-udaipur.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234872477923:android:37f6e570b6588de1328dd6",
+        "android_client_info": {
+          "package_name": "com.example.event_planner_buisness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "234872477923-nlvpo6g05b562m21u6lsr3pdh43dmih3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.event_planner_buisness",
+            "certificate_hash": "4d3af5820e4d8b73d535aa69fa80ca68536d018c"
+          }
+        },
+        {
+          "client_id": "234872477923-d9dsrb9j65hd18ksa2fmboua7260qbvh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6mDuxv_1WUAOGiHmhre8r7e2cPpcV-4w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "234872477923-d9dsrb9j65hd18ksa2fmboua7260qbvh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234872477923:android:3520afaf2bd33508328dd6",
+        "android_client_info": {
+          "package_name": "com.example.event_planner_udaipur"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "234872477923-dq5s7cm7mj543r6102acqc8jq9dj3aks.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.event_planner_udaipur",
+            "certificate_hash": "4d3af5820e4d8b73d535aa69fa80ca68536d018c"
+          }
+        },
+        {
+          "client_id": "234872477923-d9dsrb9j65hd18ksa2fmboua7260qbvh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6mDuxv_1WUAOGiHmhre8r7e2cPpcV-4w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "234872477923-d9dsrb9j65hd18ksa2fmboua7260qbvh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
