@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_planner_buisness/constant.dart';
+import 'package:event_planner_buisness/screens/events_check_box.dart';
 import 'package:event_planner_buisness/screens/home_page.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,11 +33,28 @@ class _LoginScreenState extends State<LoginScreen> {
       _isStartRegister = true;
     });
     try {
-      await signInWithGoogle();
-      setState(() {
-        _isStartRegister = false;
-      });
-      Navigator.pushReplacementNamed(context, HomePage.homePage);
+      UserCredential _loggedInUser = await signInWithGoogle();
+
+      final String _loggedInUserUID = _loggedInUser.user.uid;
+
+      QuerySnapshot _venuesCollection =
+          await FirebaseFirestore.instance.collection('venues').get();
+
+      List<QueryDocumentSnapshot> _venuesCollectionDOC = _venuesCollection.docs;
+
+      bool _doesContain = false;
+
+      for (int i = 0; i < _venuesCollectionDOC.length; i++) {
+        if (_venuesCollectionDOC[i].id == _loggedInUserUID) {
+          _doesContain = true;
+        }
+      }
+      if (_doesContain)
+        Navigator.pushReplacementNamed(context, HomePage.homePage);
+      else {
+        Navigator.of(context)
+            .pushReplacementNamed(EventsCheckBox.eventsCheckBox);
+      }
     } on NoSuchMethodError catch (e) {
       print('in Catch.....');
       setState(() {
