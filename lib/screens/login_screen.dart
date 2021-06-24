@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       UserCredential _loggedInUser = await signInWithGoogle();
 
-      final String _loggedInUserUID = _loggedInUser.user.uid;
+      final String _loggedInUserUID = _loggedInUser.user!.uid;
 
       QuerySnapshot _venuesCollection =
           await FirebaseFirestore.instance.collection('venues').get();
@@ -68,11 +68,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
-    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
     final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
+        await googleUser!.authentication;
 
     // Create a new credential
     final OAuthCredential credential = GoogleAuthProvider.credential(

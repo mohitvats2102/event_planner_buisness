@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const Color kdarkTeal = Color(0xFF033249);
+const Color kaccentColor = Color(0xFFFF8038);
 
 const TextStyle kloginText = TextStyle(
   color: Color(0xFFFF8038),

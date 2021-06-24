@@ -1,3 +1,4 @@
+import 'package:event_planner_buisness/screens/home_page.dart';
 import 'package:flutter/material.dart';
 import '../constant.dart';
 import 'package:image_picker/image_picker.dart';
@@ -97,7 +98,7 @@ class _ExtraVenueDetailState extends State<ExtraVenueDetail> {
         final providerRef = _firebaseStorage
             .ref()
             .child('venue_provider_images')
-            .child('${_auth.currentUser.uid}.jpg');
+            .child('${_auth.currentUser!.uid}.jpg');
 
         await providerRef.putFile(_venueProviderImage).whenComplete(
           () async {
@@ -106,15 +107,15 @@ class _ExtraVenueDetailState extends State<ExtraVenueDetail> {
             final venueRef = _firebaseStorage
                 .ref()
                 .child('venue_images')
-                .child('${_auth.currentUser.uid}.jpg');
+                .child('${_auth.currentUser!.uid}.jpg');
 
-            await venueRef.putFile(_pickedVenueImage).whenComplete(
+            await venueRef.putFile(_pickedVenueImage!).whenComplete(
               () async {
                 _venueImageUrl = await venueRef.getDownloadURL();
 
                 await _firestore
                     .collection('venues')
-                    .doc(_auth.currentUser.uid)
+                    .doc(_auth.currentUser!.uid)
                     .set(
                   {
                     'address': _venueLocation,
@@ -132,7 +133,8 @@ class _ExtraVenueDetailState extends State<ExtraVenueDetail> {
                 );
                 _selectedEvents.forEach((event) async {
                   await _firestore.collection('events').doc(event).update({
-                    'venueArray': FieldValue.arrayUnion([_auth.currentUser.uid])
+                    'venueArray':
+                        FieldValue.arrayUnion([_auth.currentUser!.uid])
                   });
                 });
 
@@ -143,6 +145,8 @@ class _ExtraVenueDetailState extends State<ExtraVenueDetail> {
             );
           },
         );
+
+        Navigator.of(context).pushReplacementNamed(HomePage.homePage);
       } catch (e) {
         print(e.toString());
       }
@@ -221,7 +225,7 @@ class _ExtraVenueDetailState extends State<ExtraVenueDetail> {
     _venueDescription = _routeArgs['venueDescription'];
     _selectedEvents = _routeArgs['selectedEvents'];
     _venueProviderImage = _routeArgs['venueProviderImage'];
-    print('${_auth.currentUser.uid} Hello');
+    print('${_auth.currentUser!.uid} Hello');
     return Scaffold(
       appBar: AppBar(
         title: Text('Details'),
