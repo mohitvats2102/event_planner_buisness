@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.event_planner_buisness">
    <application
-        android:label="event_planner_buisness"
+        android:label="Event Planner Buisness"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
