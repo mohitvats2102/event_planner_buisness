@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class BookingsScreen extends StatefulWidget {
@@ -113,8 +114,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
                     itemBuilder: (context, i) {
                       print('HELLOOOOLLO ' +
                           '${DateTime.fromMicrosecondsSinceEpoch(
-                            (_currentVenueBookings[i]['startDate']
-                                    as Timestamp)
+                            (_currentVenueBookings[i]['startDate'] as Timestamp)
                                 .microsecondsSinceEpoch,
                           )}');
                       return Card(
@@ -126,20 +126,18 @@ class _BookingsScreenState extends State<BookingsScreen> {
                             children: [
                               buildRow(
                                 title: 'Booker Name :   ',
-                                detail:
-                                    _currentVenueBookings[i]['booker'],
+                                detail: _currentVenueBookings[i]['booker'],
                               ),
                               buildRow(
                                 title: 'Total peoples :    ',
-                                detail:
-                                    _currentVenueBookings[i]['peoples'],
+                                detail: _currentVenueBookings[i]['peoples'],
                               ),
                               buildRow(
                                 title: 'Start Date :          ',
                                 detail: DateFormat.yMd().format(
                                   DateTime.fromMicrosecondsSinceEpoch(
-                                    (_currentVenueBookings[i]
-                                            ['startDate'] as Timestamp)
+                                    (_currentVenueBookings[i]['startDate']
+                                            as Timestamp)
                                         .microsecondsSinceEpoch,
                                   ),
                                 ),
@@ -156,13 +154,11 @@ class _BookingsScreenState extends State<BookingsScreen> {
                               ),
                               buildRow(
                                 title: 'Start Time :          ',
-                                detail: _currentVenueBookings[i]
-                                    ['startTime'],
+                                detail: _currentVenueBookings[i]['startTime'],
                               ),
                               buildRow(
                                 title: 'End Time :            ',
-                                detail:
-                                    _currentVenueBookings[i]['endTime'],
+                                detail: _currentVenueBookings[i]['endTime'],
                               ),
                               Row(
                                 mainAxisAlignment:

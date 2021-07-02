@@ -31,8 +31,7 @@ class _AcceptedBookingsState extends State<AcceptedBookings> {
                 fontSize: 20,
               ),
             ),
-            Container(
-              width: 200,
+            Expanded(
               child: Text(
                 detail,
                 style: TextStyle(

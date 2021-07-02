@@ -28,6 +28,10 @@ class _ExtraVenueDetailState extends State<ExtraVenueDetail> {
   late String _rooms;
 
   File? _pickedVenueImage;
+  File? _pic1;
+  File? _pic2;
+  File? _pic3;
+  File? _pic4;
 
   late String _venueOwnerName;
   late String _venueOwnerContact;
@@ -39,7 +43,11 @@ class _ExtraVenueDetailState extends State<ExtraVenueDetail> {
 
   void onSave() async {
     // ignore: unnecessary_null_comparison
-    if (_pickedVenueImage == null) {
+    if (_pickedVenueImage == null ||
+        _pic1 == null ||
+        _pic2 == null ||
+        _pic3 == null ||
+        _pic4 == null) {
       await showDialog(
         context: context,
         builder: (ctx) {
@@ -48,7 +56,7 @@ class _ExtraVenueDetailState extends State<ExtraVenueDetail> {
             child: AlertDialog(
               backgroundColor: Color(0xFF033249),
               title: Text(
-                'Please Pick a venue image',
+                'Please Pick all images',
                 style: TextStyle(
                   color: Color(0xFFFF8038),
                 ),
@@ -77,24 +85,52 @@ class _ExtraVenueDetailState extends State<ExtraVenueDetail> {
     FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState!.save();
-      print('Hello');
-      print(_venueOwnerName);
-      print(_venueOwnerContact);
-      print(_venueName);
-      print(_venueLocation);
-      print(_venueDescription);
-      print(_selectedEvents);
-      print(_venueProviderImage);
-      print(_charges24);
-      print(_cateringCharge);
-      print(_rooms);
-      print(_pickedVenueImage);
       String _venueProviderImageUrl = '';
       String _venueImageUrl = '';
+      String _pic1Url = '';
+      String _pic2Url = '';
+      String _pic3Url = '';
+      String _pic4Url = '';
       setState(() {
         _isUploadingStarted = true;
       });
       try {
+        final pic1Ref = _firebaseStorage
+            .ref()
+            .child('venue_images')
+            .child('${_auth.currentUser!.uid}#1.jpg');
+
+        await pic1Ref.putFile(_pic1!).whenComplete(() async {
+          _pic1Url = await pic1Ref.getDownloadURL();
+        });
+
+        final pic2Ref = _firebaseStorage
+            .ref()
+            .child('venue_images')
+            .child('${_auth.currentUser!.uid}##2.jpg');
+
+        await pic2Ref.putFile(_pic2!).whenComplete(() async {
+          _pic2Url = await pic2Ref.getDownloadURL();
+        });
+
+        final pic3Ref = _firebaseStorage
+            .ref()
+            .child('venue_images')
+            .child('${_auth.currentUser!.uid}###3.jpg');
+
+        await pic3Ref.putFile(_pic3!).whenComplete(() async {
+          _pic3Url = await pic3Ref.getDownloadURL();
+        });
+
+        final pic4Ref = _firebaseStorage
+            .ref()
+            .child('venue_images')
+            .child('${_auth.currentUser!.uid}####4.jpg');
+
+        await pic4Ref.putFile(_pic4!).whenComplete(() async {
+          _pic4Url = await pic4Ref.getDownloadURL();
+        });
+
         final providerRef = _firebaseStorage
             .ref()
             .child('venue_provider_images')
@@ -129,6 +165,8 @@ class _ExtraVenueDetailState extends State<ExtraVenueDetail> {
                     'providerName': _venueOwnerName,
                     'providerContact': _venueOwnerContact,
                     'providerImage': _venueProviderImageUrl,
+                    'moreVenueImages': [_pic1Url, _pic2Url, _pic3Url, _pic4Url],
+                    'totalBookings': 0,
                   },
                 );
                 _selectedEvents.forEach((event) async {
@@ -153,7 +191,8 @@ class _ExtraVenueDetailState extends State<ExtraVenueDetail> {
     }
   }
 
-  void pickImage() {
+  void pickImage(int _number) {
+    print('IN THE PICK IMAGE : ' + '$_number');
     showDialog(
       context: context,
       builder: (ctx) => GestureDetector(
@@ -167,7 +206,7 @@ class _ExtraVenueDetailState extends State<ExtraVenueDetail> {
           children: <Widget>[
             SimpleDialogOption(
               onPressed: () {
-                onWantToTakePic(ImageSource.camera);
+                onWantToTakePic(ImageSource.camera, _number);
               },
               child: Text(
                 'Open Camera',
@@ -176,7 +215,7 @@ class _ExtraVenueDetailState extends State<ExtraVenueDetail> {
             SizedBox(height: 10),
             SimpleDialogOption(
               onPressed: () {
-                onWantToTakePic(ImageSource.gallery);
+                onWantToTakePic(ImageSource.gallery, _number);
               },
               child: Text(
                 'Pick From Gallery',
@@ -198,7 +237,8 @@ class _ExtraVenueDetailState extends State<ExtraVenueDetail> {
     );
   }
 
-  void onWantToTakePic(ImageSource imageSource) async {
+  void onWantToTakePic(ImageSource imageSource, int _number) async {
+    print('IN ON-WANT TO TAKE PIC');
     final picker = ImagePicker();
     final PickedFile? image = await picker.getImage(
       source: imageSource,
@@ -208,10 +248,48 @@ class _ExtraVenueDetailState extends State<ExtraVenueDetail> {
 
     if (image == null) return;
     setState(() {
-      _pickedVenueImage = File(image.path);
+      if (_number == 1)
+        _pickedVenueImage = File(image.path);
+      else if (_number == 2)
+        _pic1 = File(image.path);
+      else if (_number == 3)
+        _pic2 = File(image.path);
+      else if (_number == 4)
+        _pic3 = File(image.path);
+      else if (_number == 5) _pic4 = File(image.path);
     });
     FocusScope.of(context).unfocus();
     Navigator.pop(context);
+  }
+
+  Widget containerForPic(File? imagePath, int number) {
+    return Expanded(
+      child: Container(
+        child: imagePath == null
+            ? TextButton.icon(
+                style: TextButton.styleFrom(
+                  primary: Color(0xFFFF8038),
+                ),
+                onPressed: () {
+                  pickImage(number);
+                },
+                icon: Icon(Icons.add),
+                label: Text('Add Image of venue'),
+              )
+            : null,
+        height: 150,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          border: Border.all(width: 0.8, color: Colors.black),
+          image: imagePath == null
+              ? null
+              : DecorationImage(
+                  fit: BoxFit.fill,
+                  image: FileImage(imagePath!),
+                ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -225,7 +303,6 @@ class _ExtraVenueDetailState extends State<ExtraVenueDetail> {
     _venueDescription = _routeArgs['venueDescription'];
     _selectedEvents = _routeArgs['selectedEvents'];
     _venueProviderImage = _routeArgs['venueProviderImage'];
-    print('${_auth.currentUser!.uid} Hello');
     return Scaffold(
       appBar: AppBar(
         title: Text('Details'),
@@ -334,7 +411,7 @@ class _ExtraVenueDetailState extends State<ExtraVenueDetail> {
                               primary: Color(0xFFFF8038),
                             ),
                             onPressed: () {
-                              pickImage();
+                              pickImage(1);
                             },
                             icon: Icon(Icons.add),
                             label: Text('Add Image of venue'),
@@ -351,6 +428,34 @@ class _ExtraVenueDetailState extends State<ExtraVenueDetail> {
                               image: FileImage(_pickedVenueImage!),
                             ),
                     ),
+                  ),
+                  SizedBox(height: 10),
+                  FittedBox(
+                    child: Text(
+                      'Provide 4 pics of venue\'s different location',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          containerForPic(_pic1, 2),
+                          SizedBox(width: 5),
+                          containerForPic(_pic2, 3),
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                      Row(
+                        children: [
+                          containerForPic(_pic3, 4),
+                          SizedBox(width: 5),
+                          containerForPic(_pic4, 5),
+                        ],
+                      ),
+                    ],
                   ),
                   SizedBox(height: 40),
                   ElevatedButton(
