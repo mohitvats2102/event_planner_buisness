@@ -64,11 +64,13 @@ class _EventsCheckBoxState extends State<EventsCheckBox> {
             ),
           ),
           ElevatedButton(
-            onPressed: () {
-              //print(_selectedEvents);
-              Navigator.pushNamed(context, VenueDetailForm.venueDetailFrom,
-                  arguments: _selectedEvents);
-            },
+            onPressed: _selectedEvents.length == 0
+                ? null
+                : () {
+                    Navigator.pushNamed(
+                        context, VenueDetailForm.venueDetailFrom,
+                        arguments: _selectedEvents);
+                  },
             child: Text('Next'),
             style: ElevatedButton.styleFrom(primary: Color(0xFF033249)),
           ),

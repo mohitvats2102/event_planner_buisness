@@ -167,6 +167,8 @@ class _ExtraVenueDetailState extends State<ExtraVenueDetail> {
                     'providerImage': _venueProviderImageUrl,
                     'moreVenueImages': [_pic1Url, _pic2Url, _pic3Url, _pic4Url],
                     'totalBookings': 0,
+                    'bookings': [],
+                    'acceptedBookings': [],
                   },
                 );
                 _selectedEvents.forEach((event) async {
